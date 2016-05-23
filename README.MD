@@ -57,6 +57,11 @@ $credential.Password | ConvertFrom-SecureString | Out-File -FilePath "c:\passwor
 Now you can use `c:\password.txt` in the above example section. Just supply the correct path in the `$password` variable declaration section
 
 
+test
+======
+
+TODO : Add tests :)
+
 license
 =======
 
