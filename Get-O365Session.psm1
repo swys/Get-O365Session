@@ -1,4 +1,5 @@
 # Functions
+
 # return CLI usage if missing arguments
 function usage {
 $err = @"
@@ -14,6 +15,46 @@ $err = @"
 return $err
 }
 
+# get username i.e. username@domain.com
+# takes samAccountName and a domain name
+# return concatinated version of samAccountName and domain name
+Function getUserName {
+  param(
+    $username,
+    $domain
+  )
+
+  # if $samAccountName contains @ then user has provided a full email address as user, no need to address
+  # domain. This will return full address
+  if ($username -match "@") {
+      return $username.split("@")[1]
+  } elseif ($([string]::IsNullOrEmpty($username))) {
+    return $null
+  } else {
+    # returns concatenated string --> $samAccountName + @ + $domain
+    return "$samAccountName@$domain"
+  }
+}
+
+# get credentials
+Function getCredentials {
+  param(
+    [string]$samAccountName,
+    [string]$domain,
+    $credObject
+  )
+
+  # decide what mode to use interactive or non-interactive based on args
+  if ($credObject.password -eq $null) {
+    # set $credObject to NULL to prevent another popup for get credential
+    $credObject = [System.Management.Automation.PSCredential]::Empty
+    return Get-Credential $(getUserName $samAccountName $domain)
+  } else {
+    return $credObject
+  }
+}
+
+# main module function
 Function Get-O365Session {
   # cmdlet params
   param(
@@ -24,55 +65,20 @@ Function Get-O365Session {
     $credObject
   )
 
-
-  # return usage statement if $samAccountName is $null
-  # if (!($samAccountName -and $domain) -or (!$credObject) -or ($samAccountName) -eq "/?") { return $(usage) }
+  # return usage statement if args are missing/incomplete
   if (!($samAccountName -and $domain) -and (!$credObject)) {
     return $(usage)
   }
 
-  # get username i.e. first.last@domain.com
-  # takes samAccountName and optionally a domain name
-  # return concatinated version of samAccountName and domain name
-  function getUserName {
-    param(
-      $username,
-      $domain
-    )
-    # set domain default if Null or Empty
-    if ($([string]::IsNullOrEmpty($domain))) {
-      $domain = $dDomain;
-    }
-    # if $samAccountName contains @ then user has provided a full email address as user, no need to address
-    # domain. This will return full address
-    if ($username -match "@") {
-      if ($username.split("@")[1]) {
-        return "$username"
-      } else {
-        throw "Invalid email address supplied : $username"
-      }
-    } elseif ($([string]::IsNullOrEmpty($username))) {
-      return $null
-    } else {
-      # returns concatenated string --> $samAccountName + @ + $domain
-      return "$samAccountName@$domain"
-    }
-  }
+  # setup
+  $connectUri = "https://ps.outlook.com/powershell"
+  $O365Cred = getCredentials $samAccountName $domain $credObject
 
-  # setup PSSession
-  if ($credObject.password -eq $null) {
-    # set $credObject to NULL to prevent another popup for get credential
-    $credObject = [System.Management.Automation.PSCredential]::Empty
-    $O365Cred = Get-Credential $(getUserName $samAccountName $domain)
-  } else {
-    $O365Cred = $credObject
-  }
-
+  # throw if password is blank
   if ($O365Cred.Password.Length -eq 0) {
     throw "Missing Password"
   }
 
-  $connectUri = "https://ps.outlook.com/powershell"
   # Create Session
   $O365Session = New-PSSession -Configuration Microsoft.Exchange -ConnectionUri $connectUri -Credential $O365Cred -Authentication Basic -AllowRedirection -WarningAction silentlyContinue
 
