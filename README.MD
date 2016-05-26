@@ -57,10 +57,18 @@ $credential.Password | ConvertFrom-SecureString | Out-File -FilePath "c:\passwor
 Now you can use `c:\password.txt` in the above example section. Just supply the correct path in the `$password` variable declaration section
 
 
-test
+tests
 ======
 
-TODO : Add tests :)
+Test Require Pester. See https://github.com/pester/Pester for details.
+
+To run the test just run below command from inside the repo directory :
+
+```
+Invoke-Pester
+```
+
+Pester will find the tests directory and run all of the tests.
 
 license
 =======
