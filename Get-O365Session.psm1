@@ -27,12 +27,15 @@ Function getUserName {
   # if $samAccountName contains @ then user has provided a full email address as user, no need to address
   # domain. This will return full address
   if ($username -match "@") {
-      return $username.split("@")[1]
+      # user input a full email so just return the full address
+      return $username
   } elseif ($([string]::IsNullOrEmpty($username))) {
+    # input was null so return $null
     return $null
   } else {
     # returns concatenated string --> $samAccountName + @ + $domain
-    return "$samAccountName@$domain"
+    # if domain is blank then will just return $username@
+    return "$username@$domain"
   }
 }
 
@@ -86,4 +89,4 @@ Function Get-O365Session {
   Import-Module (Import-PSSession $O365Session -AllowClobber -DisableNameChecking) -Global -WarningAction silentlyContinue
 }
 
-Export-ModuleMember Get-O365Session
+Export-ModuleMember -Function *
