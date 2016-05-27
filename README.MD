@@ -1,8 +1,9 @@
 Get-O365Session
 =================
 
-This module allows you to open a Office365 session in powershell. Once session is aquired you will have access to all of the
-Office365 remote management cmdlets.
+The purpose of this module is to make it easier to obtain a `Powershell` Session with Office365 for Administative tasks. It does *REQUIRE* an administrative account to Office365 in order to work properly.
+
+Once session is aquired you will have access to all of the Office365 remote management cmdlets, such as `Get-Mailbox` `Get-DistributionList` `Get-MailboxPermissions` etc. There are over 500 cmdlets that will be downloaded into your `PSSESSION` that will be available.
 
 install
 =================

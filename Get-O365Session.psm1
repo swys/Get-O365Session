@@ -83,10 +83,18 @@ Function Get-O365Session {
   }
 
   # Create Session
-  $O365Session = New-PSSession -Configuration Microsoft.Exchange -ConnectionUri $connectUri -Credential $O365Cred -Authentication Basic -AllowRedirection -WarningAction silentlyContinue
+  $O365Session = New-PSSession `
+    -Configuration Microsoft.Exchange `
+    -ConnectionUri $connectUri `
+    -Credential $O365Cred `
+    -Authentication Basic `
+    -AllowRedirection `
+    -WarningAction silentlyContinue
 
   # import Session Globally
-  Import-Module (Import-PSSession $O365Session -AllowClobber -DisableNameChecking) -Global -WarningAction silentlyContinue
+  Import-Module (Import-PSSession $O365Session -AllowClobber -DisableNameChecking) `
+    -Global `
+    -WarningAction silentlyContinue
 }
 
 Export-ModuleMember -Function *
