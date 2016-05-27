@@ -63,7 +63,7 @@ tests
 
 Test Require Pester. See https://github.com/pester/Pester for details.
 
-To run the test just run below command from inside the repo directory :
+To run the test just run below command from inside the repo's root directory :
 
 ```
 Invoke-Pester -Path ./tests/
