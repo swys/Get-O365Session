@@ -1,4 +1,4 @@
-# import all modules files in repo root dir
+# Import all modules from repo root dir
 Get-ChildItem ../ |`
   Where {
     $_.Name -like '*.psm1'
