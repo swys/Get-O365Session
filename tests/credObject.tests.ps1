@@ -1,14 +1,8 @@
-# Import all modules from repo root dir
-Get-ChildItem ../ |`
-  Where {
-    $_.Name -like '*.psm1'
-  } | `
-  % {
-    Import-Module $_.FullName
-  }
-
-# Check credObject return Function
 Describe "Testing getCredentials function with credObject" {
+
+  # Import main module file
+  Import-Module $PSScriptRoot\../Get-O365Session.psm1
+
   $tmpFile = "$env:temp\testing_credObject_$(Get-Random).txt"
 
   It "creates an encrypted password file" {

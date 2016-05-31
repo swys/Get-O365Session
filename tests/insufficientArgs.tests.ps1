@@ -1,14 +1,8 @@
-# import all modules in repo root dir
-Get-ChildItem ../ |`
-  Where {
-    $_.Name -like '*.psm1'
-  } | `
-  % {
-    Import-Module $_.FullName
-  }
-
 # Check credObject return Function
 Describe "Testing insufficient arguments passed to module" {
+
+  # import main module file
+  Import-Module $PSScriptRoot\../Get-O365Session.psm1
 
   # mock of main module function using same logic to check args
   Mock Get-O365Session {
@@ -39,8 +33,3 @@ Describe "Testing insufficient arguments passed to module" {
     Get-O365Session -domain "example.com" | Should Be $(usage)
   }
 }
-
-
-
-
-
