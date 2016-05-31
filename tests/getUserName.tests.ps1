@@ -1,7 +1,7 @@
 # Check credObject return Function
 Describe "Testing getUserName function" {
-  # import main module file
-  Import-Module $PSScriptRoot\../Get-O365Session.psm1
+  # import main module manifest file
+  Import-Module $PSScriptRoot\../Get-O365Session.psd1
 
   It "if given a full email address will just return the full email back" {
     getUserName "testing.tester@example.com" | Should Be "testing.tester@example.com"

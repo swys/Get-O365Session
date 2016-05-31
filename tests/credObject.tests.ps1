@@ -1,7 +1,7 @@
 Describe "Testing getCredentials function with credObject" {
 
-  # Import main module file
-  Import-Module $PSScriptRoot\../Get-O365Session.psm1
+  # Import main module manifest file
+  Import-Module $PSScriptRoot\../Get-O365Session.psd1
 
   $tmpFile = "$env:temp\testing_credObject_$(Get-Random).txt"
 

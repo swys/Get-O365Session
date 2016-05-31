@@ -1,8 +1,8 @@
 # Check credObject return Function
 Describe "Testing insufficient arguments passed to module" {
 
-  # import main module file
-  Import-Module $PSScriptRoot\../Get-O365Session.psm1
+  # import main module manifest file
+  Import-Module $PSScriptRoot\../Get-O365Session.psd1
 
   # mock of main module function using same logic to check args
   Mock Get-O365Session {
