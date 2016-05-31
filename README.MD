@@ -5,8 +5,32 @@ The purpose of this module is to make it easier to obtain a `Powershell` Session
 
 Once session is aquired you will have access to all of the Office365 remote management cmdlets, such as `Get-Mailbox` `Get-DistributionList` `Get-MailboxPermissions` etc. There are over 500 cmdlets that will be downloaded into your `PSSESSION` that will be available.
 
+motivation
+============
+
+If you are tired of writing the below lines over and over again (or if you just can't remember and don't care to remember them just like me) :
+
+```
+# create the PSCredential Object
+$cred = Get-Credential # <-- here you will be prompted for username and password and you have to type manually
+
+# setup session
+$Session = New-PSSession `
+  -ConfigurationName Microsoft.Exchange `
+  -ConnectionUri https://ps.outlook.com/powershell/ `
+  -Credential $cred `
+  -Authentication Basic `
+  -AllowRedirection
+
+# actualy import the session  
+Import-PSSession $Session
+```
+
+then use this module and you can eliminate all of the above in an easy to remember command.
+Also if you use the Non-Interactive version of this module then you can easily automate session creation.
+
 install
-=================
+========
 
 Clone the repo into a directory contained in your `PSMODULES` path.
 
