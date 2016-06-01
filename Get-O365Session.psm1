@@ -29,7 +29,7 @@ Function getUserName {
   if ($username -match "@") {
       # user input a full email so just return the full address
       return $username
-  } elseif ($([string]::IsNullOrEmpty($username))) {
+  } elseif ($([string]::IsNullOrEmpty($username)) -or $username -eq " ") {
     # input was null so return $null
     return $null
   } else {

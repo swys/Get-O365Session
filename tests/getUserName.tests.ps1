@@ -14,6 +14,10 @@ Describe "Testing getUserName function" {
   It "if given only a username and no domain it will not return a valid email address" {
     $(getUserName "testing.tester").split("@")[1] -eq '' | Should Be $True
   }
+
+  It "if given an empty string should return $null" {
+    getUserName " " | Should Be $Null
+  }
 }
 
 
