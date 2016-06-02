@@ -64,7 +64,6 @@ Function Get-O365Session {
     [string]$samAccountName,
     [string]$domain,
     [System.Management.Automation.PSCredential]
-    [System.Management.Automation.Credential()]
     $credObject
   )
 
